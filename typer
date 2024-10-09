@@ -1,0 +1,52 @@
+import time
+import pygame
+
+pygame.init
+pygame.mixer.init()
+
+poot  = pygame.mixer.Sound('C:/Users/User/Music/type1.mp3')
+pooty  = pygame.mixer.Sound('C:/Users/User/Music/type2.mp3')
+pootyy = pygame.mixer.Sound('C:/Users/User/Music/high tone.mp3')
+pootyyy = pygame.mixer.Sound('C:/Users/User/Music/lowtone.mp3')
+
+poop = True
+print("")
+time.sleep(1)
+
+def pause_and_sound(letter, odd):
+    print(letter, end="", flush=True)  # Print on the same line
+
+    # Sound based on the `odd` parameter
+    if odd:
+
+        pick_sound(letter)
+        time.sleep(0.005)
+    else:
+        pass
+    
+
+    poop = True  # Set this variable as needed
+    if poop:
+        time.sleep(0.005)
+
+def thing_to_type(whole_thing):
+    odd = True
+
+    for letter in whole_thing:
+        pause_and_sound(letter, odd)
+        odd = not odd  # Toggle `odd` value
+    print("")
+def pick_sound(letter):
+
+    if letter == " ":
+        pooty.play()
+    else:
+        poot.play()
+
+def get_text_file_print_lines(text_file):
+    with open(text_file, 'r') as file:
+    # Iterate over each line in the file
+        for line in file:
+            # Print the current line, stripping any extra whitespace
+            thing_to_type(line.strip())
+
