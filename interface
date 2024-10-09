@@ -1,0 +1,138 @@
+import typer
+import os
+
+
+
+# an interface that reads the file names, start at thoughts tree
+
+searching = True
+# Specify the directory path you want to list files from
+directory_path = 'C:\\Users\\User\\Documents\\Thoughts Tree'
+def create_text_file(directory, file_name, content=''):
+    # Construct the full path for the new file
+    file_path = os.path.join(directory, file_name+".txt")
+    
+    try:
+        # Open the file in write mode. If the file does not exist, it will be created.
+        with open(file_path, 'w') as file:
+            # Write content to the file
+            file.write(content)
+        print(f"File '{file_name}' created successfully in '{directory}'.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def create_folder(parent_dir, folder_name):
+    # Construct the full path for the new directory
+    new_folder_path = os.path.join(parent_dir, folder_name)
+    
+    try:
+        # Create the new directory
+        os.makedirs(new_folder_path, exist_ok=True)
+        print(f"Folder '{folder_name}' created successfully in '{parent_dir}'.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+def access_files(folder):
+    typer.pootyy.play()
+    try:
+        # List all entries in the specified directory
+        entries = os.listdir(folder)
+        
+        # Iterate over each entry
+        for entry in entries:
+            # Construct the full path to the entry
+            full_path = os.path.join(folder, entry)
+            
+            # Check if the entry is a file or a directory
+            if os.path.isfile(full_path):
+                typer.thing_to_type(f"File: {entry}")
+            elif os.path.isdir(full_path):
+                typer.thing_to_type(f"Folder: {entry}")
+
+    except FileNotFoundError:
+        typer.pootyyy.play()
+        typer.thing_to_type(f"The directory '{folder}' does not exist.")
+        # Find the position of the last backslash
+        pos = folder.rfind('\\')
+        
+        # If a backslash is found, slice the string up to that position
+        if pos != -1:
+            folder = folder[:pos]  # Update folder to be the new string without the last part
+        else:
+            print("No backslash found in the directory path.")
+        
+        print(folder)  # Print the updated folder path or the original if no backslash was found
+
+    except PermissionError:
+        typer.thing_to_type(f"Permission denied to access the directory '{folder}'.")
+    
+    typer.thing_to_type("")
+    new_directory = input("")
+    if new_directory == "x":
+        typer.thing_to_type("Ending program")
+        
+        return new_directory
+        
+    if new_directory == 'b':
+        pos = folder.rfind('\\')
+        
+        # If a backslash is found, slice the string up to that position
+        if pos != -1:
+            folder = folder[:pos]  # Update folder to be the new string without the last part
+        return folder
+    
+    if new_directory.startswith('read '):
+        try:
+
+            new_directory = new_directory.removeprefix('read ')
+            new_directory_address = folder + "\\" + new_directory
+            typer.thing_to_type("")
+            typer.get_text_file_print_lines(new_directory_address)
+            typer.thing_to_type("")
+        except Exception as e:
+            print("File does not exist")
+        return folder
+
+    if new_directory == "f":
+        typer.thing_to_type('Type folder name')
+        folder_name = input("")
+        create_folder(folder, folder_name)
+        return folder
+        
+    if new_directory == "t":
+        typer.thing_to_type("Type file name")
+        file_name = input("")
+        create_text_file(folder, file_name)
+        return folder
+
+    if new_directory.startswith('w '):
+
+        new_directory = new_directory.removeprefix('w ')
+        print(new_directory)
+        new_directory_address = folder + "\\" + new_directory
+        with open(new_directory_address, 'a') as file:
+            typer.thing_to_type("Write something to add to file")
+            potato = input(" ")
+            file.write("\n")
+            file.write(potato)
+            
+
+        return folder
+    
+    else:
+        new_directory_address = folder + "\\" + new_directory
+        return new_directory_address
+
+typer.thing_to_type('Type folder to access or "x" to exit program and "b" to go back')
+typer.thing_to_type('Type "read" then name of the text file to read files')
+scoop = access_files(directory_path)
+while searching:
+    typer.pootyy.play()
+    if scoop == "x":
+        break
+    scoop = access_files(scoop)
+    
+    
+
+
